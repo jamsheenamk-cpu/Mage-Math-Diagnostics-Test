@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAGE  Mathematics Diagnostic Assessment</title>
+
+<style>
+:root {
+    --primary-color: #0f4c81;
+    --secondary-color: #16a34a;
+    --accent-color: #1e3a8a;
+    --bg-gradient: linear-gradient(135deg, #0f4c81 0%, #16a34a 100%);
+    --card-bg: #ffffff;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 950px;
+    margin: 20px auto;
+    background: var(--card-bg);
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.teacher-btn {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0;
+    transition: all 0.3s ease;
+}
+
+.teacher-btn:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.header-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.logo-container {
+    text-align: center;
+}
+
+.logo-img {
+    max-width: 280px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.logo-fallback {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.logo-fallback span {
+    color: var(--secondary-color);
+}
+
+h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin: 10px 0 0 0;
+    font-size: 26px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #555;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.timer-box {
+    background: #f0fdf4;
+    border: 2px solid var(--secondary-color);
+    color: var(--primary-color);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.header-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+input[type="text"], textarea {
+    width: 100%;
+    padding: 13px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+    font-family: inherit;
+}
+
+input[type="text"]:focus, textarea:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+}
+
+button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 13px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background 0.3s, transform 0.1s;
+    font-weight: bold;
+}
+
+button:hover {
+    background: var(--accent-color);
+}
+
+.btn-secondary {
+    background: var(--secondary-color);
+}
+
+.btn-secondary:hover {
+    background: #15803d;
+}
+
+.btn-small {
+    padding: 6px 12px;
+    font-size: 13px;
+    margin-top: 0;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    margin: 12px 0;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 16px;
+}
+
+.option input[type="radio"] {
+    margin-right: 12px;
+}
+
+.option:hover {
+    background: #f0fdf4;
+    border-color: var(--secondary-color);
+}
+
+.progress {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.question {
+    font-size: 19px;
+    font-weight: 600;
+    margin: 20px 0;
+    color: #111;
+    line-height: 1.6;
+}
+
+.result {
+    text-align: center;
+}
+
+.result-box {
+    background: #f0fdf4;
+    padding: 35px 25px;
+    border-radius: 12px;
+    margin: 20px 0;
+    border-left: 6px solid var(--secondary-color);
+    text-align: center;
+}
+
+.topic-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.topic-table th, .topic-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.topic-table th {
+    background: var(--primary-color);
+    color: white;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.small {
+    font-size: 14px;
+    color: #666;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.modal.active {
+    display: flex !important;
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 800px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #888;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+
+.status-correct {
+    color: #16a34a;
+    font-weight: bold;
+}
+
+.status-incorrect {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+.detail-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+    background: #f9fafb;
+    text-align: left;
+}
+
+.warning-banner {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.instructions-box {
+    background: #fffbe3;
+    border: 1px solid #ffe58f;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.instructions-box ul {
+    margin: 5px 0 0 20px;
+    padding: 0;
+}
+
+.instructions-box li {
+    margin-bottom: 5px;
+}
+
+/* VERTICAL FRACTION DISPLAY */
+.fraction {
+    display: inline-flex;
+    flex-direction: column;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 0.9em;
+    padding: 0 4px;
+    line-height: 1.1;
+}
+.fraction .numerator {
+    border-bottom: 2px solid #333;
+    padding-bottom: 2px;
+    font-weight: bold;
+}
+.fraction .denominator {
+    padding-top: 2px;
+    font-weight: bold;
+}
+
+/* COLUMN WORKING PLACE-VALUE GRID STYLING */
+.column-grid-wrapper {
+    background: #f8fafc;
+    border: 2px dashed #0f4c81;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    display: inline-block;
+}
+
+.column-grid-table {
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+.column-grid-table td {
+    padding: 4px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.column-input {
+    width: 44px;
+    height: 44px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    border: 2px solid #0f4c81;
+    border-radius: 6px;
+    padding: 0 !important;
+}
+
+.column-input.regroup-box {
+    border-color: #16a34a;
+    background: #f0fdf4;
+    font-size: 15px;
+    height: 32px;
+}
+
+.grid-line {
+    border-bottom: 3px solid #333 !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- START SCREEN -->
+<div id="startScreen">
+    <div class="top-bar">
+        <button class="teacher-btn" onclick="openTeacherLogin()">🔑 Teacher Portal</button>
+    </div>
+
+    <div class="header-logo">
+        <div class="logo-container">
+            <img src="logo.png" alt="MAGE HYBRID LEARNING" class="logo-img" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 60\' width=\'280\' height=\'50\'><text x=\'0\' y=\'40\' font-family=\'Segoe UI, sans-serif\' font-size=\'32\' font-weight=\'800\' fill=\'%230f4c81\'>MAGE <tspan fill=\'%2316a34a\'>HYBRID LEARNING</tspan></text></svg>';">
+            <div id="altLogo" class="logo-fallback" style="display:none;">MAGE <span>HYBRID LEARNING</span></div>
+        </div>
+    </div>
+
+    <h1>Mathematics Diagnostic Assessment</h1>
+    <p class="subtitle">Multi-Topic Placement Assessment for Primary Learners</p>
+
+    <div class="instructions-box">
+        <b> Assessment Instructions:</b>
+        <ul>
+            <li>Total Assessment: <b>30 Questions</b> | Time Limit: <b>45 Minutes</b>.</li>
+            <li><b>Strict Window Policy:</b> Tab switching is strictly monitored (Max 3 warnings).</li>
+        </ul>
+    </div>
+
+    <label><b>Student Name</b></label>
+    <br><br>
+    <input type="text" id="studentName" placeholder="Enter full name">
+    <br>
+
+    <button onclick="startTest()">Start Diagnostic</button>
+
+    <p class="small">Time Limit: 45 Minutes</p>
+</div>
+
+<!-- TEST SCREEN -->
+<div id="testScreen" class="hidden">
+    <div class="header-status">
+        <div class="progress">Question <span id="questionNumber">1</span> of 30</div>
+        <div class="timer-box">Time Left: <span id="timeDisplay">45:00</span></div>
+    </div>
+
+    <div id="tabWarning" class="warning-banner hidden">
+        Warning: Switching tabs is strictly prohibited! Recorded Violations: <span id="switchCountDisplay">0</span> / 3
+    </div>
+
+    <div id="questionArea"></div>
+
+    <div style="display:flex; gap:10px; align-items:center;">
+        <button onclick="submitAnswer()">Submit Answer</button>
+    </div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="resultScreen" class="hidden">
+    <div class="result">
+        <h1>Assessment Submitted</h1>
+
+        <div class="result-box">
+            <h2 style="color: var(--primary-color); margin-top:0;">Thank You, <span id="displayStudentName"></span>!</h2>
+            <p style="font-size: 18px; color: #444; margin-top: 15px;">
+                Your performance profile has been saved.
+            </p>
+            <p id="placementDisplay" style="font-size: 19px; font-weight: bold; color: var(--primary-color);"></p>
+            <p id="autoSubmitReason" style="color: #dc2626; font-weight: bold;"></p>
+        </div>
+
+        <p id="savingMessage" style="font-weight: bold; color: var(--secondary-color);"></p>
+    </div>
+</div>
+
+<!-- TEACHER DASHBOARD SCREEN -->
+<div id="teacherScreen" class="hidden">
+    <div class="top-bar">
+        <button class="teacher-btn" onclick="exitTeacherPortal()">Exit Portal</button>
+    </div>
+    <h1>Teacher / Admin Dashboard</h1>
+    <p class="subtitle">Detailed Skills Diagnostic & Roster Management</p>
+
+    <div style="margin-bottom: 20px; display: flex; gap: 10px;">
+        <button class="btn-secondary" onclick="exportClassExcel()">📊 Export Results for MS Excel</button>
+        <button onclick="loadTeacherDashboard()" style="background:#0f4c81;">🔄 Refresh Cloud Data</button>
+    </div>
+
+    <table class="topic-table">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Time Taken</th>
+                <th>Score</th>
+                <th>%</th>
+                <th>Category Assessment</th>
+                <th>Numbers %</th>
+                <th>Geometry %</th>
+                <th>Measurement %</th>
+                <th>Word Problems %</th>
+                <th>Column Working Method %</th>
+                <th>Tab Switches</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="teacherTableBody"></tbody>
+    </table>
+</div>
+
+</div>
+
+<!-- STUDENT DETAILS MODAL -->
+<div id="detailModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2 id="modalStudentName" style="color: var(--primary-color); margin-top:0;"></h2>
+        <p id="modalMeta" style="font-weight:bold;"></p>
+        <hr>
+        <div id="modalDetailsArea"></div>
+    </div>
+</div>
+
+<script>
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvKVfMRycRC59r42jKw7OCeIJFl60pSi-cIXwAD2Xa8v1F0Y5pDXje9rWk_8MGcyPWvQ/exec";
+const TEACHER_PIN = "egam@2026";
+
+const TIME_LIMIT_SECONDS = 45 * 60;
+const MAX_TAB_SWITCHES = 3;
+const MAX_TEST_QUESTIONS = 30;
+
+let studentName = "";
+let currentQuestionIndex = 0;
+let score = 0;
+
+let studentAnswersList = [];
+let currentLoadedRecords = [];
+
+let timerInterval = null;
+let timeRemaining = TIME_LIMIT_SECONDS;
+let testStartTime = null;
+
+let tabSwitchCount = 0;
+let isTestActive = false;
+
+let activeQuestionsSequence = [];
+let currentAdaptationLevel = 1; 
+let usedQuestionIds = new Set();
+
+document.addEventListener("visibilitychange", handleTabSwitch);
+
+function handleTabSwitch() {
+    if (document.hidden && isTestActive) {
+        tabSwitchCount++;
+        document.getElementById("tabWarning").classList.remove("hidden");
+        document.getElementById("switchCountDisplay").textContent = tabSwitchCount;
+
+        if (tabSwitchCount > MAX_TAB_SWITCHES) {
+            alert(`Violation threshold exceeded! Switching tabs is strictly prohibited. Your assessment has been automatically submitted.`);
+            document.getElementById("autoSubmitReason").textContent = "Note: Assessment was automatically submitted due to a violation of the tab switch policy.";
+            finishTest();
+        } else {
+            alert(`WARNING: Switching tabs is strictly prohibited! Violation ${tabSwitchCount} recorded.`);
+        }
+    }
+}
+
+// VERTICAL FRACTION FORMATTING FUNCTION
+function buildFractionHTML(num, den) {
+    return `<span class="fraction"><span class="numerator">${num}</span><span class="denominator">${den}</span></span>`;
+}
+
+const questionPool = [
+    { id: 1, level: 1, category: "numbers", skill: "Number Names", title: "Write the number name for 56.", options: ["Fifty-six", "Sixty-five", "Fifty-sixteen"], correct: 0 },
+    { id: 2, level: 1, category: "numbers", skill: "Place Value", title: "What number is made of 9 tens and 3 ones?", options: ["39", "93", "930"], correct: 1 },
+    { id: 3, level: 1, category: "numbers", skill: "Digit Value", title: "In the number 86, what is the value of the digit 6?", options: ["6 (or 6 ones)", "60 (or 6 tens)", "600"], correct: 0 },
+    { id: 4, level: 1, category: "numbers", skill: "Even & Odd Numbers", title: "Select all the even numbers from the list: 17, 24, 36, 41, 52, 69, 80.", options: ["24, 36, 52, 80", "17, 41, 69", "24, 36, 41, 52"], correct: 0 },
+    { id: 5, level: 1, category: "geometry", skill: "2D Shapes", title: "How many straight sides does a triangle have?", options: ["4", "3", "5"], correct: 1 },
+    { id: 6, level: 1, category: "numbers", skill: "Fractions", title: `A circle is split into 2 equal parts and 1 part is shaded. What fraction is shaded?`, get options() { return [buildFractionHTML(1,2), buildFractionHTML(1,4), buildFractionHTML(3,4)]; }, correct: 0 },
+    { id: 7, level: 1, category: "numbers", skill: "Multiplication Concepts", title: "Write 3 + 3 + 3 + 3 as a multiplication calculation.", options: ["4 × 3", "3 × 3", "4 + 3"], correct: 0 },
+    { id: 8, level: 1, category: "regrouping", isRegrouping: false, isAddSub: true, skill: "Addition Without Regrouping", type: "column_grid", title: "Solve 34 + 25 in columns by typing each digit into the answer boxes below:", num1: "34", num2: "25", op: "+", correctAns: "59" },
+    { id: 9, level: 1, category: "regrouping", isRegrouping: false, isAddSub: true, skill: "Subtraction Without Regrouping", type: "column_grid", title: "Solve 78 - 34 in columns by typing each digit into the answer boxes below:", num1: "78", num2: "34", op: "-", correctAns: "44" },
+    { id: 10, level: 1, category: "numbers", skill: "Number Sequences", title: "Complete the number sequence: 5, 10, 15, 20, ___", options: ["22", "25", "30"], correct: 1 },
+    { id: 11, level: 1, category: "numbers", skill: "Number Names", title: "Write the number name for 709 in words.", options: ["Seven hundred nine", "Seven hundred ninety", "Seventy-nine"], correct: 0 },
+    { id: 12, level: 1, category: "numbers", skill: "Place Value", title: "Which number has 5 tens, 3 ones and 2 hundreds?", options: ["a) 235", "b) 253", "c) 523"], correct: 1 },
+    { id: 13, level: 2, category: "regrouping", isRegrouping: true, isAddSub: true, skill: "Addition With Regrouping", type: "column_grid", title: "Solve 47 + 38 in columns by entering each digit below (use the green top box for carrying):", num1: "47", num2: "38", op: "+", correctAns: "85" },
+    { id: 14, level: 1, category: "regrouping", isRegrouping: false, isAddSub: true, skill: "Subtraction", type: "column_grid", title: "Solve 96 - 52 in columns by entering each digit below:", num1: "96", num2: "52", op: "-", correctAns: "44" },
+    { id: 15, level: 1, category: "regrouping", isRegrouping: false, isAddSub: true, skill: "3-Digit Addition", type: "column_grid", title: "Solve 123 + 214 in columns by entering each digit below:", num1: "123", num2: "214", op: "+", correctAns: "337" },
+    { id: 16, level: 1, category: "regrouping", isRegrouping: false, isAddSub: true, skill: "3-Digit Subtraction", type: "column_grid", title: "Solve 785 - 342 in columns by entering each digit below:", num1: "785", num2: "342", op: "-", correctAns: "443" },
+    { id: 17, level: 2, category: "numbers", skill: "Multiplication Tables", title: "Complete the multiplication table calculation: 6 × 7 = ?", options: ["36", "42", "48"], correct: 1 },
+    { id: 18, level: 2, category: "numbers", skill: "Rounding Numbers", title: "Round 264 to the nearest 10.", options: ["260", "270", "200"], correct: 0 },
+    { id: 19, level: 2, category: "numbers", skill: "Comparing Fractions", title: `Which fraction is larger: ${buildFractionHTML(1,2)} or ${buildFractionHTML(1,4)}?`, get options() { return [buildFractionHTML(1,2), buildFractionHTML(1,4), "Both are equal"]; }, correct: 0 },
+    { id: 20, level: 2, category: "numbers", skill: "Rounding Numbers", title: "Round 364 to the nearest 100.", options: ["300", "400", "360"], correct: 1 },
+    { id: 21, level: 2, category: "numbers", skill: "Number Patterns", title: "Find the next three numbers: 3, 8, 13, 18, ___, ___, ___", options: ["23, 28, 33", "21, 24, 27", "22, 27, 32"], correct: 0 },
+    { id: 22, level: 2, category: "numbers", skill: "Adding Fractions", title: `Calculate: ${buildFractionHTML(3,8)} + ${buildFractionHTML(2,8)}`, get options() { return [buildFractionHTML(5,16), buildFractionHTML(5,8), buildFractionHTML(1,8)]; }, correct: 1 },
+    { id: 23, level: 2, category: "numbers", skill: "Number Patterns", title: "Complete the number pattern: 120, 110, 100, ___", options: ["90", "80", "95"], correct: 0 },
+    { id: 24, level: 2, category: "regrouping", isRegrouping: true, isAddSub: true, skill: "2-Digit Multiplication", type: "column_grid", title: "Solve 23 × 3 in columns by typing each digit into the answer boxes below:", num1: "23", num2: "3", op: "×", correctAns: "69" },
+    { id: 25, level: 2, category: "word_problems", skill: "Word Problems: Fractions", title: `A pizza is divided into 8 equal slices. Sara eats 3 slices, and her brother eats 2 slices. What fraction of the pizza does Sara eat?`, get options() { return [buildFractionHTML(3,8), buildFractionHTML(2,8), buildFractionHTML(5,8)]; }, correct: 0 },
+    { id: 26, level: 2, category: "regrouping", isRegrouping: true, isAddSub: true, skill: "4-Digit Subtraction Across Zeros", type: "column_grid", title: "Solve 7000 - 3458 in columns by typing each digit below:", num1: "7000", num2: "3458", op: "-", correctAns: "3542" },
+    { id: 27, level: 2, category: "geometry", skill: "Area", title: "A square garden has a side length of 9 m. What is its total area?", options: ["36 m²", "81 m²", "18 m²"], correct: 1 },
+    { id: 28, level: 2, category: "word_problems", skill: "Multi-Step Word Problems", title: "A library has 845 books. Borrowers take 267 books, and 115 new books arrive. How many books are in the library now?", options: ["693 books", "463 books", "713 books"], correct: 0 },
+    { id: 29, level: 2, category: "measurement", skill: "Ordering Integers / Temperature", title: "Order these temperatures from coldest to warmest: -6°C, 2°C, -1°C, 0°C, -4°C", options: ["-6°C, -4°C, -1°C, 0°C, 2°C", "2°C, 0°C, -1°C, -4°C, -6°C", "-1°C, -4°C, -6°C, 0°C, 2°C"], correct: 0 },
+    { id: 30, level: 2, category: "numbers", skill: "Square Numbers Sequence", title: "Identify the next number in the square number sequence: 1, 4, 9, 16, 25, ___", options: ["30", "36", "49"], correct: 1 }
+];
+
+function startTest() {
+    const nameInput = document.getElementById("studentName").value.trim();
+    if (!nameInput) {
+        alert("Please enter your full name before starting.");
+        return;
+    }
+    studentName = nameInput;
+    isTestActive = true;
+    tabSwitchCount = 0;
+    score = 0;
+    currentQuestionIndex = 0;
+    studentAnswersList = [];
+    usedQuestionIds = new Set();
+    activeQuestionsSequence = [...questionPool];
+
+    document.getElementById("startScreen").classList.add("hidden");
+    document.getElementById("testScreen").classList.remove("hidden");
+    document.getElementById("questionNumber").textContent = "1";
+
+    startTimer();
+    renderQuestion();
+}
+
+function startTimer() {
+    timeRemaining = TIME_LIMIT_SECONDS;
+    testStartTime = new Date();
+    updateTimerDisplay();
+
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        updateTimerDisplay();
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert("Time's up! Your diagnostic assessment is being submitted.");
+            finishTest();
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const mins = Math.floor(timeRemaining / 60);
+    const secs = timeRemaining % 60;
+    document.getElementById("timeDisplay").textContent = 
+        `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+}
+
+function renderQuestion() {
+    if (currentQuestionIndex >= activeQuestionsSequence.length) {
+        finishTest();
+        return;
+    }
+
+    const q = activeQuestionsSequence[currentQuestionIndex];
+    document.getElementById("questionNumber").textContent = currentQuestionIndex + 1;
+
+    let html = `<div class="question">${currentQuestionIndex + 1}. ${q.title}</div>`;
+
+    if (q.type === 'column_grid') {
+        const len = q.correctAns.length;
+        let num1Padded = q.num1.padStart(len, ' ');
+        let num2Padded = q.num2.padStart(len, ' ');
+
+        html += `<div class="column-grid-wrapper">`;
+        html += `<table class="column-grid-table">`;
+        
+        // Carry row
+        html += `<tr><td></td>`;
+        for (let i = 0; i < len; i++) {
+            html += `<td><input type="text" maxlength="1" class="column-input regroup-box" id="regroup_${i}"></td>`;
+        }
+        html += `</tr>`;
+
+        // First operand row
+        html += `<tr><td></td>`;
+        for (let i = 0; i < len; i++) {
+            html += `<td>${num1Padded[i] !== ' ' ? num1Padded[i] : ''}</td>`;
+        }
+        html += `</tr>`;
+
+        // Second operand row with operator
+        html += `<tr><td style="padding-right: 8px;">${q.op}</td>`;
+        for (let i = 0; i < len; i++) {
+            html += `<td class="grid-line">${num2Padded[i] !== ' ' ? num2Padded[i] : ''}</td>`;
+        }
+        html += `</tr>`;
+
+        // Answer input cells row
+        html += `<tr><td></td>`;
+        for (let i = 0; i < len; i++) {
+            html += `<td><input type="text" maxlength="1" class="column-input col-ans-digit" id="ans_digit_${i}"></td>`;
+        }
+        html += `</tr>`;
+
+        html += `</table></div>`;
+    } else {
+        const opts = q.options;
+        opts.forEach((opt, idx) => {
+            html += `
+                <label class="option">
+                    <input type="radio" name="standard_answer" value="${idx}">
+                    <span>${opt}</span>
+                </label>
+            `;
+        });
+    }
+
+    document.getElementById("questionArea").innerHTML = html;
+}
+
+function submitAnswer() {
+    const q = activeQuestionsSequence[currentQuestionIndex];
+    let isCorrect = false;
+    let selectedAnswerText = "";
+    let correctAnswerText = "";
+
+    if (q.type === 'column_grid') {
+        const digitInputs = document.querySelectorAll('.col-ans-digit');
+        let constructedAns = "";
+        digitInputs.forEach(inp => {
+            constructedAns += inp.value.trim();
+        });
+
+        if (!constructedAns) {
+            alert("Please enter digits in the column answer boxes before submitting.");
+            return;
+        }
+
+        selectedAnswerText = constructedAns;
+        correctAnswerText = q.correctAns;
+        isCorrect = (constructedAns === q.correctAns);
+    } else {
+        const selected = document.querySelector('input[name="standard_answer"]:checked');
+        if (!selected) {
+            alert("Please select an answer option.");
+            return;
+        }
+
+        const selectedIndex = Number(selected.value);
+        isCorrect = (selectedIndex === q.correct);
+        
+        let tempDiv = document.createElement("div");
+        tempDiv.innerHTML = q.options[selectedIndex];
+        selectedAnswerText = tempDiv.textContent || tempDiv.innerText || "";
+        
+        tempDiv.innerHTML = q.options[q.correct];
+        correctAnswerText = tempDiv.textContent || tempDiv.innerText || "";
+    }
+    
+    if (isCorrect) score++;
+
+    studentAnswersList.push({
+        question: q.title.replace(/<[^>]*>/g, ''),
+        category: q.category,
+        skill: q.skill,
+        selectedAnswer: selectedAnswerText,
+        correctAnswer: correctAnswerText,
+        isCorrect: isCorrect,
+        questionLevel: q.level
+    });
+
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < activeQuestionsSequence.length) {
+        renderQuestion();
+    } else {
+        finishTest();
+    }
+}
+
+function calculateCategoryBreakdown() {
+    let totals = {
+        numbers: { correct: 0, total: 0 },
+        geometry: { correct: 0, total: 0 },
+        measurement: { correct: 0, total: 0 },
+        word_problems: { correct: 0, total: 0 },
+        regrouping: { correct: 0, total: 0 }
+    };
+
+    studentAnswersList.forEach(ans => {
+        let cat = ans.category || "numbers";
+        if (totals[cat]) {
+            totals[cat].total++;
+            if (ans.isCorrect) totals[cat].correct++;
+        }
+    });
+
+    let breakdown = {};
+    for (let key in totals) {
+        if (totals[key].total > 0) {
+            let pct = Math.round((totals[key].correct / totals[key].total) * 100);
+            breakdown[key] = `${pct}% (${totals[key].correct}/${totals[key].total})`;
+        } else {
+            breakdown[key] = "-";
+        }
+    }
+
+    return breakdown;
+}
+
+function finishTest() {
+    if (!isTestActive && document.getElementById("testScreen").classList.contains("hidden")) return;
+    
+    isTestActive = false;
+    clearInterval(timerInterval);
+    document.getElementById("testScreen").classList.add("hidden");
+    document.getElementById("resultScreen").classList.remove("hidden");
+
+    let totalPoints = studentAnswersList.length || MAX_TEST_QUESTIONS;
+    let percentage = Math.round((score / totalPoints) * 100);
+    
+    let targetLevel = (percentage >= 60) ? "Level 2 (Intermediate)" : "Level 1 (Foundational)";
+
+    document.getElementById("displayStudentName").textContent = studentName;
+    document.getElementById("placementDisplay").textContent = `Assigned Level: ${targetLevel} (${percentage}%)`;
+    
+    sendToCloudDatabase(percentage, targetLevel, totalPoints);
+}
+
+function sendToCloudDatabase(percentage, targetLevel, totalPoints) {
+    const timeElapsed = Math.round((new Date() - testStartTime) / 1000);
+    const mins = Math.floor(timeElapsed / 60);
+    const secs = timeElapsed % 60;
+    const timeString = `${mins}m ${secs}s`;
+
+    const breakdown = calculateCategoryBreakdown();
+
+    const payload = {
+        name: studentName,
+        score: score,
+        total: totalPoints,
+        percentage: percentage,
+        levelCategory: targetLevel,
+        timeTaken: timeString,
+        tabSwitches: tabSwitchCount,
+        breakdown: breakdown,
+        details: studentAnswersList
+    };
+
+    document.getElementById("savingMessage").textContent = "Saving result to cloud database...";
+
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    }).then(() => {
+        document.getElementById("savingMessage").textContent = "✓ Results saved successfully!";
+    }).catch(err => {
+        console.error("Cloud save error:", err);
+        document.getElementById("savingMessage").textContent = "Result recorded locally (Cloud sync failed).";
+    });
+}
+
+function openTeacherLogin() {
+    let pin = prompt("Enter Security Passcode to access Teacher Dashboard:");
+    if (pin === TEACHER_PIN) {
+        document.getElementById("startScreen").classList.add("hidden");
+        document.getElementById("resultScreen").classList.add("hidden");
+        document.getElementById("teacherScreen").classList.remove("hidden");
+        loadTeacherDashboard();
+    } else if (pin !== null) {
+        alert("Incorrect Passcode. Access Denied.");
+    }
+}
+
+function exitTeacherPortal() {
+    document.getElementById("teacherScreen").classList.add("hidden");
+    document.getElementById("startScreen").classList.remove("hidden");
+}
+
+function loadTeacherDashboard() {
+    let tbody = document.getElementById("teacherTableBody");
+    tbody.innerHTML = `<tr><td colspan="12">Loading records from Cloud Database...</td></tr>`;
+
+    const script = document.createElement('script');
+    const callbackName = 'googleSheetsCallback_' + Math.floor(Math.random() * 1000000);
+    
+    window[callbackName] = function(data) {
+        delete window[callbackName];
+        if (document.body.contains(script)) document.body.removeChild(script);
+        currentLoadedRecords = Array.isArray(data) ? data : [];
+        renderTableData(currentLoadedRecords);
+    };
+
+    script.src = `${GOOGLE_SCRIPT_URL}?callback=${callbackName}&_=${Date.now()}`;
+    script.onerror = function() {
+        delete window[callbackName];
+        if (document.body.contains(script)) document.body.removeChild(script);
+        tbody.innerHTML = `<tr><td colspan="12" style="color:red;">Error fetching records. Ensure Apps Script deployment permissions are set.</td></tr>`;
+    };
+
+    document.body.appendChild(script);
+}
+
+function renderTableData(records) {
+    let tbody = document.getElementById("teacherTableBody");
+    tbody.innerHTML = "";
+
+    if (!records || records.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="12">No student submissions recorded yet.</td></tr>`;
+        return;
+    }
+
+    records.forEach((r, index) => {
+        let switchBadge = r.tabSwitches > 0 ? `<span style="color:red; font-weight:bold;">${r.tabSwitches}</span>` : "0";
+        let b = r.breakdown || {};
+        tbody.innerHTML += `
+            <tr>
+                <td><b>${r.name}</b></td>
+                <td>${r.timeTaken || 'N/A'}</td>
+                <td>${r.score} / ${r.total}</td>
+                <td>${r.percentage}%</td>
+                <td><b>${r.levelCategory || r.placement}</b></td>
+                <td>${b.numbers || '-'}</td>
+                <td>${b.geometry || '-'}</td>
+                <td>${b.measurement || '-'}</td>
+                <td>${b.word_problems || '-'}</td>
+                <td>${b.regrouping || '-'}</td>
+                <td>${switchBadge}</td>
+                <td><button class="btn-small btn-secondary" onclick="viewStudentDetails(${index})">View Analysis</button></td>
+            </tr>
+        `;
+    });
+}
+
+function viewStudentDetails(index) {
+    let student = currentLoadedRecords[index];
+    if (!student) return;
+
+    document.getElementById("modalStudentName").textContent = student.name;
+    document.getElementById("modalMeta").textContent = `Time Elapsed: ${student.timeTaken || 'N/A'} | Score: ${student.score}/${student.total} (${student.percentage}%) | Category: ${student.levelCategory || student.placement} | Tab Switches: ${student.tabSwitches || 0}`;
+
+    let html = "";
+    if (student.details && student.details.length > 0) {
+        student.details.forEach((item, i) => {
+            let statusClass = item.isCorrect ? "status-correct" : "status-incorrect";
+            let statusText = item.isCorrect ? "✓ Correct" : "✗ Incorrect";
+
+            html += `
+                <div class="detail-card">
+                    <div style="display:flex; justify-content:space-between;">
+                        <b>Q${i + 1}: ${item.question}</b>
+                        <span class="${statusClass}">${statusText}</span>
+                    </div>
+                    <div style="font-size:13px; color:#555; margin-top:5px;">
+                        <b>Skill:</b> ${item.skill || 'General'} | 
+                        <b>Student Answer:</b> ${item.selectedAnswer} | 
+                        <b>Correct Answer:</b> ${item.correctAnswer}
+                    </div>
+                </div>
+            `;
+        });
+    } else {
+        html = "<p>No detailed question responses recorded for this entry.</p>";
+    }
+
+    document.getElementById("modalDetailsArea").innerHTML = html;
+    document.getElementById("detailModal").classList.add("active");
+}
+
+function closeModal() {
+    document.getElementById("detailModal").classList.remove("active");
+}
+
+function exportClassExcel() {
+    if (!currentLoadedRecords || currentLoadedRecords.length === 0) {
+        alert("No student data available to export.");
+        return;
+    }
+
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "Student Name,Time Taken,Score,Total,Percentage,Category Level,Numbers %,Geometry %,Measurement %,Word Problems %,Column Working %,Tab Switches\n";
+
+    currentLoadedRecords.forEach(r => {
+        let b = r.breakdown || {};
+        let row = [
+            `"${r.name}"`,
+            `"${r.timeTaken || ''}"`,
+            r.score,
+            r.total,
+            `${r.percentage}%`,
+            `"${r.levelCategory || r.placement || ''}"`,
+            `"${b.numbers || ''}"`,
+            `"${b.geometry || ''}"`,
+            `"${b.measurement || ''}"`,
+            `"${b.word_problems || ''}"`,
+            `"${b.regrouping || ''}"`,
+            r.tabSwitches || 0
+        ].join(",");
+        csvContent += row + "\n";
+    });
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "MAGE_Math_Diagnostic_Results.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+</script>
+</body>
+</html>
